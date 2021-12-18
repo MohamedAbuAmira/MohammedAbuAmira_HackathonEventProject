@@ -1,19 +1,21 @@
+import 'package:elancer_hackathon/business_logic/category_events_cubit/category_events_cubit.dart';
 import 'package:elancer_hackathon/data/models/category.dart';
 import 'package:elancer_hackathon/data/models/event.dart';
 import 'package:elancer_hackathon/router/app_router.dart';
 import 'package:elancer_hackathon/screens/widgets/picture_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key, required this.category}) : super(key: key);
+class EventsScreen extends StatefulWidget {
+  const EventsScreen({Key? key, required this.category}) : super(key: key);
   final Category category;
 
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  _EventsScreenState createState() => _EventsScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class _EventsScreenState extends State<EventsScreen> {
   final Event event = Event();
   void text() {
     event.name = "My first Event";
@@ -25,25 +27,60 @@ class _CategoryScreenState extends State<CategoryScreen> {
         'https://images.unsplash.com/photo-1639818019702-bba773c78923?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=455&q=80';
   }
 
+  late List<Event> allEvents;
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<CategoryEventsCubit>(context).getAllCategoryEvents();
+  }
+
+  Widget buildBlocWidget() {
+    return BlocBuilder<CategoryEventsCubit, CategoryEventsState>(
+      builder: (context, state) {
+        if (state is CategoryEventsLoaded) {
+          allEvents = (state).categoryEvents;
+          return _buildCategoryEventsCards();
+        } else {
+          return showloadingLoaded();
+        }
+      },
+    );
+  }
+
+  Widget showloadingLoaded() {
+    return const Center(
+      child: CircularProgressIndicator(color: Colors.blueAccent),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     text();
     return Scaffold(
 
+
+      appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_back_outlined, color: Colors.black,), onPressed: (){Navigator.pop(context);}),
+        backgroundColor: Colors.white,),
       body: Column(
         children: [
           Stack(
+            alignment: Alignment.bottomCenter,
             children: [
-              Image.asset("assets/images/Rectangle.png"),
+              Padding(
+                padding:  EdgeInsets.symmetric(vertical: 10.h),
+                child: Image.asset("assets/images/Rectangle.png"),
+              ),
+              CircleAvatar(
+                radius: 43.r,
+                child: Icon(
+                  Icons.person,
+                ),
+              ),
               SizedBox(
                 height: 27.h,
               ),
-              Positioned(
-                  bottom: 10,
-                  child: CircleAvatar(
-                      child: Icon(
-                    Icons.person,
-                  )))
+
             ],
           ),
           Text(
@@ -62,18 +99,22 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 fontWeight: FontWeight.bold,
                 fontSize: 22.sp),
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            padding: EdgeInsets.zero,
-            itemCount: widget.category.eventsCount,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (ctx, index) {
-              return EventCard(event: event);
-            },
-          ),
+          buildBlocWidget(),
         ],
       ),
+    );
+  }
+
+  ListView _buildCategoryEventsCards() {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: allEvents.length,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (ctx, index) {
+        return EventCard(event: allEvents[index]);
+      },
     );
   }
 }
@@ -90,6 +131,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        contentPadding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
         onTap: () {
           Navigator.pushNamed(context, AppRouter.eventDetails,
               arguments: event);
@@ -98,28 +140,28 @@ class EventCard extends StatelessWidget {
           width: 97.w,
           height: 80.h,
           child: PictureProvider(
-            image: event.image,
+            image: event.imageUrl,
           ),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "4654554",
+              "${event.time.toString()} - ${event.durationHours.toString()}Hours",
               style: TextStyle(
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.normal,
                   fontSize: 11.sp),
             ),
             Text(
-              "Name",
+              event.name,
               style: TextStyle(
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.w500,
                   fontSize: 15.sp),
             ),
             Text(
-              "fgf data",
+              event.date,
               style: TextStyle(
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.normal,
@@ -136,7 +178,7 @@ class EventCard extends StatelessWidget {
           width: 48.w,
           alignment: Alignment.center,
           child: Text(
-            "Active",
+            event.status,
             style: TextStyle(
                 color: Color(0XFF11A38D),
                 fontFamily: "Roboto",

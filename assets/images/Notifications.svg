@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="Notifications_" data-name="Notifications " transform="translate(-326 -60)">
+    <rect id="Rectangle_2468" data-name="Rectangle 2468" width="28" height="28" rx="8" transform="translate(326 60)" fill="#f6f6f8"/>
+    <g id="add_black_24dp" transform="translate(326 60)">
+      <path id="Path_20" data-name="Path 20" d="M0,0H28V28H0Z" fill="none"/>
+      <path id="Path_21" data-name="Path 21" d="M22.167,15.167h-7v7H12.833v-7h-7V12.833h7v-7h2.333v7h7Z" fill="#4e486a"/>
+    </g>
+  </g>
+</svg>
