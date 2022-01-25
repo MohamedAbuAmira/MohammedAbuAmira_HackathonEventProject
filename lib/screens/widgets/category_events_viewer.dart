@@ -18,8 +18,8 @@ class CategoryEventsViewer extends StatelessWidget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 1,
-        crossAxisSpacing: 1,
-        mainAxisSpacing: 1,
+        crossAxisSpacing: 15,
+        mainAxisSpacing: 15,
       ),
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
@@ -66,7 +66,7 @@ class CategoryItem extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 children: [
                   SizedBox(
-                    child: PictureProvider(image: category.image),
+                    child: CustomPictureProvider(image: category.image),
                     height: 130.h,
                     width: 130.w,
                   ),
@@ -82,10 +82,13 @@ class CategoryItem extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(
-                            "assets/images/share.png",
-                            width: 10.w,
-                            height: 10.h,
+                          Padding(
+                            padding: EdgeInsets.only(left: 6.w),
+                            child: Image.asset(
+                              "assets/images/share.png",
+                              width: 10.w,
+                              height: 10.h,
+                            ),
                           ),
                           Padding(
                             padding:  EdgeInsets.only(left: 5.w),

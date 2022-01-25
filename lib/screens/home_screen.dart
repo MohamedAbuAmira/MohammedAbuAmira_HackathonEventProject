@@ -23,9 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   final Category category = Category();
   void text(){
-    category.nameEn = "My first category";
+    category.nameEn = "Information Technology";
     category.eventsCount = 4;
-    category.image = 'https://images.unsplash.com/photo-1639818019702-bba773c78923?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=455&q=80';
+    category.image = 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80';
   }
 
   Widget buildBlocWidget() {
@@ -52,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     text();
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
 
         backgroundColor: Colors.white,
         actions: [IconButton(onPressed: (){Navigator.pushNamed(context, AppRouter.addEvent);}, icon: SvgPicture.asset("assets/images/Notifications.svg"))],
@@ -70,6 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategoriesEventsListView() => Padding(
     padding:  EdgeInsets.symmetric(horizontal: 12.w),
-    child: CategoryEventsViewer(categories: allCategories,),
+    child: Padding(
+      padding:  EdgeInsets.only(top: 10.h),
+      child: CategoryEventsViewer(categories: allCategories,),
+    ),
   );
 }

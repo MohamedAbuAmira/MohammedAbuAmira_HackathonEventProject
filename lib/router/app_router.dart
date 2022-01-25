@@ -16,6 +16,7 @@ import 'package:elancer_hackathon/screens/event_detials.dart';
 import 'package:elancer_hackathon/screens/home_screen.dart';
 import 'package:elancer_hackathon/screens/login_screen.dart';
 import 'package:elancer_hackathon/screens/luanch_screen.dart';
+import 'package:elancer_hackathon/screens/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +26,7 @@ class AppRouter {
   static const String events = '/events_screen';
   static const String eventDetails = '/event_detials';
   static const String addEvent = '/add_event';
+  static const String onboarding = '/onboarding';
 
   static const String home = '/';
 
@@ -41,6 +43,10 @@ class AppRouter {
       case login:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
+        );
+      case onboarding:
+        return MaterialPageRoute(
+          builder: (_) => const OboardingScreen(),
         );
       case home:
         final categoryRepository = CategoryRepository(CategoriesWebService());

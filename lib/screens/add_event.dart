@@ -49,6 +49,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Image.asset("assets/images/Group19420.png"),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        backgroundColor: Colors.white,
+        elevation: 0,
         centerTitle: true,
         title: Text(
           "Add Event",
@@ -203,8 +210,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   textInputType: TextInputType.name,
                 ),
                 SizedBox(height: 25.h),
-                // DefaultButton(
-                //     press: () async => await performLogin(), text: "Log In"),
+                DefaultButton(
+                    press: () {}, text: "Add Event"),
               ],
             ),
           ),

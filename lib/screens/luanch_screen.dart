@@ -16,7 +16,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
       String ruote =
-          SharedPrefController().loggedIn ? AppRouter.home : AppRouter.login;
+          SharedPrefController().loggedIn ? AppRouter.home : AppRouter.onboarding;
       Navigator.pushReplacementNamed(context, ruote);
     });
   }

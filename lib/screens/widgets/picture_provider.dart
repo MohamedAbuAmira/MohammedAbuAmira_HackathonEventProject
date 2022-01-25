@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PictureProvider extends StatelessWidget {
-  const PictureProvider({
+class CustomPictureProvider extends StatelessWidget {
+  const CustomPictureProvider({
     Key? key,
     required this.image,
     this.borderRadius = 12,
